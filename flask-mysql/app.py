@@ -5,10 +5,10 @@ from flask_sqlalchemy import SQLAlchemy
 from marshmallow_sqlalchemy import ModelSchema
 from marshmallow_sqlalchemy import fields
 
-from db import username, host, password
+from db import username, host, password, database
 
 app = Flask(__name__)
-db_uri = f'mysql+pymysql://{username}:{password}@{host}/flask_mysql'
+db_uri = f'mysql+pymysql://{username}:{password}@{host}/{database}'
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 db = SQLAlchemy(app)
 
