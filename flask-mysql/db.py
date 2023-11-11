@@ -1,4 +1,5 @@
 #!/usr/bin/python3
-username = "username"
+username = "your_username"
 host = "localhost"
-password = "password"
+password = "your_password"
+database = "preferred_database"
