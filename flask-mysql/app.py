@@ -2,6 +2,9 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy import fields
+
 from db import username, host, password
 
 app = Flask(__name__)
@@ -25,6 +28,20 @@ class Author(db.Model):
 
     def __repr__(self):
         return f"Product {self.id}"
+
+
+class AuthorSchema(ModelSchema):
+	"""
+	class serves JSON response from our API
+	using the data returned by SQLAlchemy
+	"""
+	class Meta(ModelSchema.Meta):
+		model = Authors
+		sqla_session = db.session
+
+	id = fields.Number(dump_only=True)
+	name = fields.String(required=True)
+	specialisation = fields.String(required=True)
 
 
 if __name__ == "__main__":
