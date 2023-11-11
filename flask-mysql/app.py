@@ -2,8 +2,9 @@
 
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
-from marshmallow_sqlalchemy import ModelSchema
-from marshmallow_sqlalchemy import fields
+# from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from marshmallow import fields
 
 from db import username, host, password, database
 
@@ -29,19 +30,29 @@ class Author(db.Model):
     def __repr__(self):
         return f"Product {self.id}"
 
-
-class AuthorSchema(ModelSchema):
+# class AuthorSchema(ModelSchema)
+class AuthorSchema(SQLAlchemyAutoSchema):
 	"""
 	class serves JSON response from our API
 	using the data returned by SQLAlchemy
 	"""
-	class Meta(ModelSchema.Meta):
-		model = Authors
-		sqla_session = db.session
+	# class Meta(ModelSchema.Meta)
+	class Meta(SQLAlchemyAutoSchema):
+		model = Author
+	sqla_session = db.session
 
 	id = fields.Number(dump_only=True)
 	name = fields.String(required=True)
 	specialisation = fields.String(required=True)
+
+
+@app.route("/authors", methods = ["GET"])
+def index():
+	get_authors = Author.query.all()
+	author_schema = AuthorSchema(many=True)
+	# authors, error = author_schema.dump(get_authors)
+	authors = author_schema.dump(get_authors)
+	return make_response(jsonify({"authors": authors}))
 
 
 if __name__ == "__main__":
