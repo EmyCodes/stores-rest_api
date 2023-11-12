@@ -37,7 +37,7 @@ class AuthorSchema(SQLAlchemyAutoSchema):
 	using the data returned by SQLAlchemy
 	"""
 	# class Meta(ModelSchema.Meta)
-	class Meta(SQLAlchemyAutoSchema):
+	class Meta(SQLAlchemyAutoSchema.Meta):
 		model = Author
 	sqla_session = db.session
 
