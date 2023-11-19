@@ -22,5 +22,7 @@ def get_stores():
 
 @app.post("/store")
 def post_stores():
-    new_store = request.get_json()
-    return {"name": new_store["name"], "items": new_store["items"]}, 201
+    request_store = request.get_json()
+    new_store = {"name": request_store["name"], "items": request_store["items"]}
+    stores.append(new_store)
+    return new_store, 201
