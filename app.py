@@ -41,13 +41,13 @@ def create_item(name):
 @app.get("/store/<string:name>")
 def get_store(name):
     for store in stores:
-        if store == name:
+        if store["name"] == name:
             return {"store": store}, 201
     return f"Message: '{name}' Not Found", 401
 
 @app.get("/store/<string:name>/items")
 def get_items_in_store(name):
     for store in stores:
-        if store == name:
+        if store["name"] == name:
             return {"store": store["items"]}, 201
     return f"Message: '{name}' Not Found", 401
