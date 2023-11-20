@@ -35,7 +35,7 @@ def create_item(name):
             new_store = {"name": new_item["name"], "items": new_item["items"]}
         stores.append(new_store)
         return new_store, 201
-    return f"Message: {name} not found", 401
+    return f"Message: {name} not found", 404
 
 
 @app.get("/store/<string:name>")
@@ -43,11 +43,11 @@ def get_store(name):
     for store in stores:
         if store["name"] == name:
             return {"store": store}, 201
-    return f"Message: '{name}' Not Found", 401
+    return f"Message: '{name}' Not Found", 404
 
 @app.get("/store/<string:name>/items")
 def get_items_in_store(name):
     for store in stores:
         if store["name"] == name:
             return {"store": store["items"]}, 201
-    return f"Message: '{name}' Not Found", 401
+    return f"Message: '{name}' Not Found", 404
