@@ -33,5 +33,6 @@ def create_item(name):
     for store in stores:
         if store == name:
             new_store = {"name": new_item["name"], "items": new_item["items"]}
+	    stores.append(new_store)
             return new_store, 201
     return f"Message: {name} not found", 401
