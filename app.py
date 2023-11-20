@@ -21,7 +21,7 @@ def get_stores():
     return [{"stores": stores}]
 
 @app.post("/store")
-def post_stores():
+def create_stores():
     request_store = request.get_json()
     new_store = {"name": request_store["name"], "items": request_store["items"]}
     stores.append(new_store)
