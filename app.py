@@ -51,3 +51,12 @@ def get_items_in_store(name):
         if store["name"] == name:
             return {"store": store["items"]}, 201
     return f"Message: '{name}' Not Found", 404
+
+# @app.get("/store/<string:name>/items/<string:price>")
+# def get_items_value_in_store(name, price):
+#     for store in stores:
+#         if store["name"] == name:
+#             for item in store:
+#                 # if item["price"]== int(price):
+#                 return item['price'], 201
+#     return f"Message: '{price}' Not Found", 404
