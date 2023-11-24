@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.get("/store")
 def get_all_stores():
     """This endpoint GET ALL stores"""
-    return [{"stores": list(stores.values())}]
+    return {"stores": list(stores.values())}
 
 
 @app.post("/store")
