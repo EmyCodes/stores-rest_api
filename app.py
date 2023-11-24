@@ -36,7 +36,7 @@ def create_item():
     #     return f"Message: {name} not found", 404
     item_id = uuid4().hex
     new_item = {**item_data, "id": item_id}
-    stores[item_id] = new_item
+    items[item_id] = new_item
     return new_item, 201
 
 
