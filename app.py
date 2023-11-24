@@ -28,7 +28,7 @@ def post_stores():
     return new_store, 201
 
 
-@app.post("/items")
+@app.post("/item")
 def create_item():
     """This endpoint CREATE new store"""
     item_data = request.get_json()
@@ -40,7 +40,7 @@ def create_item():
     return new_item, 201
 
 
-@app.get("/items")
+@app.get("/item")
 def get_all_items():
     """This endpoint GET ALL new items"""
     return {"items": list(items.values())}
@@ -55,11 +55,11 @@ def get_one_store(store_id):
         return {"Message": "Store Not Found"}, 404
 
 
-@app.get("/items/<string:item_id")
+@app.get("/item/<string:item_id")
 def get_one_item(item_id):
     """This endpoint GET a specific item by item_id"""
     # if items["item_id"] not in items:
     try:
         return items[item_id]
-    except (KeyError, ValueError):
+    except (KeyError):
         return {"Message": "Item Not Found"}, 404
