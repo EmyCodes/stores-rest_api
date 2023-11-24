@@ -55,11 +55,11 @@ def get_one_store(store_id):
         return {"Message": "Store Not Found"}, 404
 
 
-@app.get("/item/<string:item_id")
+@app.get("/item/<string:item_id>")
 def get_one_item(item_id):
     """This endpoint GET a specific item by item_id"""
     # if items["item_id"] not in items:
     try:
         return items[item_id]
-    except (KeyError):
+    except KeyError:
         return {"Message": "Item Not Found"}, 404
