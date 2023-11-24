@@ -32,8 +32,8 @@ def post_stores():
 def create_item(name):
     """This endpoint CREATE new store"""
     item_data = request.get_json()
-    if item_data["store_id"] not in stores:
-        return f"Message: {name} not found", 404
+    # if item_data[store_id] not in stores:
+    #     return f"Message: {name} not found", 404
     item_id = uuid4().hex
     new_item = {**item_data, "id": item_id}
     stores[item_id] = new_item
@@ -50,7 +50,7 @@ def get_all_items():
 def get_one_store(store_id):
     """This endpoint GET a specific store by store_id"""
     try:
-        return stores["store_id"]
+        return stores[store_id]
     except KeyError:
         return "Message: Store Not Found", 404
 
@@ -60,6 +60,6 @@ def get_one_item(item_id):
     """This endpoint GET a specific item by item_id"""
     # if items["item_id"] not in items:
     try:
-        return items["item_id"]
-    except KeyError:
+        return items[item_id]
+    except (KeyError, ValueError):
         return "Message: Item Not Found", 404
