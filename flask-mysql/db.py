@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-username = "your_username"
+username = "EmyCodes"
 host = "localhost"
-password = "your_password"
-database = "preferred_database"
+password = "19022002"
+database = "flask_mysql"
