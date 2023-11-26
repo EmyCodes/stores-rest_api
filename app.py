@@ -89,6 +89,29 @@ def get_all_items():
     return {"items": list(items.values())}
 
 
+@app.get("/item/<string:item_id>")
+def get_one_item(item_id):
+    """This endpoint GET a specific item by item_id"""
+    # if items["item_id"] not in items:
+    try:
+        return items[item_id]
+    except KeyError:
+        abort (400, Message="Item Not Found")
+
+
+@app.delete("/item/<string:item_id>")
+def delete_item(item_id):
+    item_data = request.get_json()
+    if (
+        "name" not in item_data and
+        "price" not in item_data
+    ):
+        abort(400, message="Bad Request. Ensure you include 'name' and 'price' in JSON Payload")
+    for item in items.values():
+        if (item_data[item_id] == items[item_id]):
+            del items[item_id]
+            return {"Message": "Item deleted"}
+
 @app.get("/store/<string:store_id>")
 def get_one_store(store_id):
     """This endpoint GET a specific store by store_id"""
@@ -98,11 +121,3 @@ def get_one_store(store_id):
         abort (400, Message="Store Not Found")
 
 
-@app.get("/item/<string:item_id>")
-def get_one_item(item_id):
-    """This endpoint GET a specific item by item_id"""
-    # if items["item_id"] not in items:
-    try:
-        return items[item_id]
-    except KeyError:
-        abort (400, Message="Item Not Found")
