@@ -67,6 +67,15 @@ def delete_store(store_id):
         abort(400, message="Store Not Found!")
 
 
+@app.update("/store/<string:store_id>")
+def update_store(store_id):
+    store_data = request.get_json()
+    try:
+        stores[store_id] |= store_data
+        return dict(stores[store_id])
+    except KeyError:
+        abort(400, message="Store Not Found!")
+
 @app.post("/item")
 def create_item():
     """This endpoint CREATE new store"""
