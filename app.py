@@ -42,7 +42,7 @@ def create_store():
         abort(400, message="Store Not Found")
     # Else: Update database with the Processed Logic'''
     store_id = uuid4().hex
-    new_store = {**store_data, "id": store_id}
+    new_store = {**store_data, "store_id": store_id}
     # new_store = {**request_store, id}
     stores[store_id] = new_store
     return new_store, 201
@@ -57,7 +57,7 @@ def create_item():
     if (
         "name" not in item_data or
         "price" not in item_data or
-        "item_id" not in item_data
+        "store_id" not in item_data
     ):
         abort(400, message="Bad Request! Ensure 'name', 'price',\
               'store_id' are in the JSON Payload")
@@ -66,19 +66,19 @@ def create_item():
     for item in items.values():
         if (
             item_data["name"] == item["name"] and
-            item_data["item_id"] == item[item_id]
+            item_data["store_id"] == item["store_id"]
         ):
 
             abort(400, message="Store Already Exist")
     
-    if item_data["item_id"] not in items:
+    if item_data["store_id"] not in stores:
     # if store_data["store_id"] != stores[store_id]:    
-        abort(400, message="Item Not Found")
+        abort(400, message="Store Not Found")
     # Else: Update database with the Processed Logic
     # if item_data[store_id] not in stores:
     #     return f"Message: {name} not found", 404
     item_id = uuid4().hex
-    new_item = {**item_data, "id": item_id}
+    new_item = {**item_data, "item_id": item_id}
     items[item_id] = new_item
     return new_item, 201
 
