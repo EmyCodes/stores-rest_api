@@ -67,7 +67,7 @@ def delete_store(store_id):
         abort(400, message="Store Not Found!")
 
 
-@app.update("/store/<string:store_id>")
+@app.put("/store/<string:store_id>")
 def update_store(store_id):
     store_data = request.get_json()
     try:
