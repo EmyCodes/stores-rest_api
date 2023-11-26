@@ -107,10 +107,12 @@ def delete_item(item_id):
         "price" not in item_data
     ):
         abort(400, message="Bad Request. Ensure you include 'name' and 'price' in JSON Payload")
-    for item in items.values():
-        if (item_data[item_id] == items[item_id]):
-            del items[item_id]
-            return {"Message": "Item deleted"}
+    try:
+        del items[item_id]
+        return {"Message": "Item deleted!"}
+    except:
+        abort(400, message="Item Not Found")
+
 
 @app.get("/store/<string:store_id>")
 def get_one_store(store_id):
