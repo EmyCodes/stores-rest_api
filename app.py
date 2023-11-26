@@ -36,11 +36,11 @@ def create_store():
             store_data["store_id"] == store[store_id]
         ):
             abort(400, message="Store Already Exist")
-
+    '''
     if store_data["store_id"] not in stores:
     # if store_data["store_id"] != stores[store_id]:    
         abort(400, message="Store Not Found")
-    # Else: Update database with the Processed Logic
+    # Else: Update database with the Processed Logic'''
     store_id = uuid4().hex
     new_store = {**store_data, "id": store_id}
     # new_store = {**request_store, id}
