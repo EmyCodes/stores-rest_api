@@ -12,12 +12,6 @@ using Flask
 app = Flask(__name__)
 
 
-@app.get("/store")
-def get_all_stores():
-    """This endpoint GET ALL stores"""
-    return {"stores": list(stores.values())}
-
-
 @app.post("/store")
 def create_store():
     """This endpoint POST new store with a unique id"""
@@ -46,6 +40,31 @@ def create_store():
     # new_store = {**request_store, id}
     stores[store_id] = new_store
     return new_store, 201
+
+
+@app.get("/store")
+def get_all_stores():
+    """This endpoint GET ALL stores"""
+    return {"stores": list(stores.values())}
+
+
+
+@app.get("/store/<string:store_id>")
+def get_one_store(store_id):
+    """This endpoint GET a specific store by store_id"""
+    try:
+        return stores[store_id]
+    except KeyError:
+        abort (400, Message="Store Not Found")
+
+@app.delete("/store/<string:store_id>")
+def delete_store(store_id):
+    store_data = request.get_json()
+    try:
+        del stores[store_id]
+        return {"Message": "Store successfully Deleted"}
+    except KeyError:
+        abort(400, message="Store Not Found!")
 
 
 @app.post("/item")
@@ -130,14 +149,3 @@ def update_item(item_id):
         return items[item_id]
     except KeyError:
         abort(400, message="Item Not Found!")
-
-
-@app.get("/store/<string:store_id>")
-def get_one_store(store_id):
-    """This endpoint GET a specific store by store_id"""
-    try:
-        return stores[store_id]
-    except KeyError:
-        abort (400, Message="Store Not Found")
-
-
