@@ -114,6 +114,24 @@ def delete_item(item_id):
         abort(400, message="Item Not Found")
 
 
+@app.put("/item/<string:item_id>")
+def update_item(item_id):
+    item_data = request.get_json()
+    if (
+        "name" not in item_data or
+        "price" not in item_data
+    ):
+        abort(400, message="Bad Request. Ensure you include 'name' and 'price' in JSON Payload")
+    
+    try:
+        # items[item_id] = item_data
+        items[item_id] |= item_data
+        print({"Message": "Item Updated Successfully!"})
+        return items[item_id]
+    except KeyError:
+        abort(400, message="Item Not Found!")
+
+
 @app.get("/store/<string:store_id>")
 def get_one_store(store_id):
     """This endpoint GET a specific store by store_id"""
