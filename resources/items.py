@@ -6,6 +6,7 @@ from flask.views import MethodView
 from uuid import uuid4
 
 from db import items
+from schemas import ItemSchema, ItemUpdateSchema
 
 
 blp = Blueprint("items", __name__, description="Operations on the items")
@@ -33,14 +34,15 @@ class Items(MethodView):
         except:
             abort(404, message="Item Not Found")
     
-    def put(self, item_id):
-        item_data = request.get_json()
-        if (
+    @blp.arguments(ItemUpdateSchema)
+    def put(self, item_data, item_id):
+        # item_data = request.get_json()
+        """if (
             "name" not in item_data or
             "price" not in item_data
         ):
             abort(400, message="Bad Request. Ensure you include 'name' and 'price' in JSON Payload")
-        
+        """
         try:
             # items[item_id] = item_data
             items[item_id] |= item_data
@@ -57,18 +59,19 @@ class ItemList(MethodView):
         """This endpoint GET ALL new items"""
         return {"items": list(items.values())}
         
-    def post(self):
+    @blp.arguments(ItemSchema)
+    def post(self, item_data):
         """This endpoint CREATE new item"""
-        item_data = request.get_json()
+        # item_data = request.get_json()
 
-        #Error handling
+        """#Error handling
         if (
             "name" not in item_data or
             "price" not in item_data or
             "store_id" not in item_data
         ):
             abort(400, message="Bad Request! Ensure 'name', 'price',\
-                'store_id' are in the JSON Payload")
+                'store_id' are in the JSON Payload")"""
             
         # Check if the key exists
         for item in items.values():
