@@ -18,7 +18,7 @@ class Items(MethodView):
         try:
             return items[item_id]
         except KeyError:
-            abort (404, Message="Item Not Found")
+            abort(404, Message="Item Not Found")
 
     def delete(self, item_id):
         item_data = request.get_json()
@@ -73,7 +73,7 @@ class ItemList(MethodView):
         # Check if the key exists
         for item in items.values():
             if (
-                item_data["name"] == item["name"] and
+                item_data["name"] == item["name"] or
                 item_data["store_id"] == item["store_id"]
             ):
 
