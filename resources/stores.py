@@ -18,7 +18,7 @@ class Store(MethodView):
         try:
             return stores[store_id]
         except KeyError:
-            abort (404, Message="Store Not Found")
+            abort(404, Message="Store Not Found")
 
     def delete(self, store_id):
         store_data = request.get_json()
@@ -57,9 +57,8 @@ class StoreList(MethodView):
         # Check if the key exists
         for store in stores.values():
             if (
-                store_data["name"] == store ["name"] or
-                store_data["store_id"] == store[store_id]
-            ):
+                store_data["name"] == store ["name"]
+                ):
                 abort(400, message="Store Already Exist")
         '''
         if store_data["store_id"] not in stores:

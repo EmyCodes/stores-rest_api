@@ -73,7 +73,7 @@ class ItemList(MethodView):
         # Check if the key exists
         for item in items.values():
             if (
-                item_data["name"] == item["name"] or
+                item_data["name"] == item["name"] and``
                 item_data["store_id"] == item["store_id"]
             ):
 
