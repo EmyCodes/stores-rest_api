@@ -18,7 +18,7 @@ class Items(MethodView):
         try:
             return items[item_id]
         except KeyError:
-            abort (400, Message="Item Not Found")
+            abort (404, Message="Item Not Found")
 
     def delete(self, item_id):
         item_data = request.get_json()
@@ -31,7 +31,7 @@ class Items(MethodView):
             del items[item_id]
             return {"Message": "Item deleted!"}
         except:
-            abort(400, message="Item Not Found")
+            abort(404, message="Item Not Found")
     
     def put(self, item_id):
         item_data = request.get_json()
@@ -47,7 +47,7 @@ class Items(MethodView):
             print({"Message": "Item Updated Successfully!"})
             return items[item_id]
         except KeyError:
-            abort(400, message="Item Not Found!")
+            abort(404, message="Item Not Found!")
 
 
 
