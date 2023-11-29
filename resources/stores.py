@@ -18,7 +18,7 @@ class Store(MethodView):
         try:
             return stores[store_id]
         except KeyError:
-            abort (400, Message="Store Not Found")
+            abort (404, Message="Store Not Found")
 
     def delete(self, store_id):
         store_data = request.get_json()
@@ -26,7 +26,7 @@ class Store(MethodView):
             del stores[store_id]
             return {"Message": "Store successfully Deleted"}
         except KeyError:
-            abort(400, message="Store Not Found!")
+            abort(404, message="Store Not Found!")
     
     def put(self, store_id):
         store_data = request.get_json()
@@ -34,7 +34,7 @@ class Store(MethodView):
             stores[store_id] |= store_data
             return dict(stores[store_id])
         except KeyError:
-            abort(400, message="Store Not Found!")
+            abort(404, message="Store Not Found!")
 
 
 
