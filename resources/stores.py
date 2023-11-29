@@ -6,6 +6,7 @@ from flask.views import MethodView
 from uuid import uuid4
 
 from db import stores
+from schemas import StoreSchema
 
 
 blp = Blueprint("stores", __name__, description="Operations on the Stores")
@@ -43,16 +44,17 @@ class StoreList(MethodView):
     def get(self):
         """This endpoint GET ALL stores"""
         return {"stores": list(stores.values())}
-        
-    def post(self):
+    
+    @blp.arguments(StoreSchema)
+    def post(self, store_data):
         """ This endpoint POST new store with a unique id"""
-        store_data = request.get_json()
+        # store_data = request.get_json()
         #Error handling
-        if (
+        """if (
             "name" not in store_data
         ):
             abort(400, message="Bad Request! Ensure 'name', 'price',\
-                'store_id' are in the JSON Payload")
+                'store_id' are in the JSON Payload")"""
             
         # Check if the key exists
         for store in stores.values():
