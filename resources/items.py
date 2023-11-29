@@ -58,7 +58,7 @@ class ItemList(MethodView):
         return {"items": list(items.values())}
         
     def post(self):
-        """This endpoint CREATE new store"""
+        """This endpoint CREATE new item"""
         item_data = request.get_json()
 
         #Error handling
@@ -77,7 +77,7 @@ class ItemList(MethodView):
                 item_data["store_id"] == item["store_id"]
             ):
 
-                abort(400, message="Store Already Exist")
+                abort(400, message="Item Already Exist")
         
         item_id = uuid4().hex
         new_item = {**item_data, "id": item_id}
