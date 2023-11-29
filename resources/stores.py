@@ -57,7 +57,7 @@ class StoreList(MethodView):
         # Check if the key exists
         for store in stores.values():
             if (
-                store_data["name"] == store ["name"] and
+                store_data["name"] == store ["name"] or
                 store_data["store_id"] == store[store_id]
             ):
                 abort(400, message="Store Already Exist")
