@@ -14,6 +14,7 @@ blp = Blueprint("stores", __name__, description="Operations on the Stores")
 
 @blp.route("/store/<string:store_id>")
 class Store(MethodView):
+    @blp.response(200, StoreSchema)
     def get(self, store_id):
         """This endpoint GET a specific store by store_id"""
         try:
@@ -41,11 +42,13 @@ class Store(MethodView):
 
 @blp.route("/store")
 class StoreList(MethodView):
+    @blp.response(200, StoreSchema(many=True))
     def get(self):
         """This endpoint GET ALL stores"""
-        return {"stores": list(stores.values())}
+        return stores.values()
     
     @blp.arguments(StoreSchema)
+    @blp.response(200, StoreSchema)
     def post(self, store_data):
         """ This endpoint POST new store with a unique id"""
         # store_data = request.get_json()

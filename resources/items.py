@@ -13,6 +13,7 @@ blp = Blueprint("items", __name__, description="Operations on the items")
 
 @blp.route("/items/<string:item_id>")
 class Items(MethodView):
+    @blp.response(200, ItemSchema)
     def get(self, item_id):
         """This endpoint GET a specific item by item_id"""
         # if items["item_id"] not in items:
@@ -35,6 +36,7 @@ class Items(MethodView):
             abort(404, message="Item Not Found")
     
     @blp.arguments(ItemUpdateSchema)
+    @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
         # item_data = request.get_json()
         """if (
@@ -55,11 +57,13 @@ class Items(MethodView):
 
 @blp.route("/item")
 class ItemList(MethodView):
+    @blp.response(200, ItemSchema(many=True))
     def get(self):
         """This endpoint GET ALL new items"""
-        return {"items": list(items.values())}
+        return items.values()
         
     @blp.arguments(ItemSchema)
+    @blp.response(200, ItemSchema)
     def post(self, item_data):
         """This endpoint CREATE new item"""
         # item_data = request.get_json()
