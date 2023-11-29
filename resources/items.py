@@ -79,12 +79,6 @@ class ItemList(MethodView):
 
                 abort(400, message="Store Already Exist")
         
-        if item_data["store_id"] not in stores:
-        # if store_data["store_id"] != stores[store_id]:    
-            abort(400, message="Store Not Found")
-        # Else: Update database with the Processed Logic
-        # if item_data[store_id] not in stores:
-        #     return f"Message: {name} not found", 404
         item_id = uuid4().hex
         new_item = {**item_data, "id": item_id}
         items[item_id] = new_item
