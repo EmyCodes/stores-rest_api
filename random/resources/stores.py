@@ -6,8 +6,6 @@ from flask.views import MethodView
 from uuid import uuid4
 
 from db import stores
-from schemas import StoreSchema
-
 
 blp = Blueprint("stores", __name__, description="Operations on the Stores")
 
