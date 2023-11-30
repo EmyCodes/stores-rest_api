@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from db import db
 
 class ItemModel(db.Model):
