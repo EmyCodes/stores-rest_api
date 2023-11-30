@@ -3,9 +3,11 @@
 from flask import request
 from flask_smorest import abort, Blueprint
 from flask.views import MethodView
-from uuid import uuid4
+from sqlalchemy.exc import SQLAlchemyError
+# from uuid import uuid4
 
 # from db import items
+from models import ItemModel
 from schemas import ItemSchema, ItemUpdateSchema
 
 
@@ -58,15 +60,12 @@ class ItemList(MethodView):
     @blp.response(200, ItemSchema)
     def post(self, item_data):
         """This endpoint CREATE new item"""
-        for item in items.values():
-            if (
-                item_data["name"] == item["name"] and
-                item_data["store_id"] == item["store_id"]
-            ):
+        new_item = ItemModel(**item_data)
 
-                abort(400, message="Item Already Exist")
-        
-        item_id = uuid4().hex
-        new_item = {**item_data, "id": item_id}
-        items[item_id] = new_item
-        return new_item, 201
+        try:
+            db.session.add(new_item)
+            db.session.commit()
+        except SQLAlchemyError:
+            abort(500, message="An Error Occurred while Inserting the Item.")
+
+        return new_item
