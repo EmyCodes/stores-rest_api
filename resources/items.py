@@ -16,7 +16,6 @@ class Items(MethodView):
     @blp.response(200, ItemSchema)
     def get(self, item_id):
         """This endpoint GET a specific item by item_id"""
-        # if items["item_id"] not in items:
         try:
             return items[item_id]
         except KeyError:
@@ -38,13 +37,6 @@ class Items(MethodView):
     @blp.arguments(ItemUpdateSchema)
     @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
-        # item_data = request.get_json()
-        """if (
-            "name" not in item_data or
-            "price" not in item_data
-        ):
-            abort(400, message="Bad Request. Ensure you include 'name' and 'price' in JSON Payload")
-        """
         try:
             # items[item_id] = item_data
             items[item_id] |= item_data
@@ -66,18 +58,6 @@ class ItemList(MethodView):
     @blp.response(200, ItemSchema)
     def post(self, item_data):
         """This endpoint CREATE new item"""
-        # item_data = request.get_json()
-
-        """#Error handling
-        if (
-            "name" not in item_data or
-            "price" not in item_data or
-            "store_id" not in item_data
-        ):
-            abort(400, message="Bad Request! Ensure 'name', 'price',\
-                'store_id' are in the JSON Payload")"""
-            
-        # Check if the key exists
         for item in items.values():
             if (
                 item_data["name"] == item["name"] and

@@ -51,25 +51,11 @@ class StoreList(MethodView):
     @blp.response(200, StoreSchema)
     def post(self, store_data):
         """ This endpoint POST new store with a unique id"""
-        # store_data = request.get_json()
-        #Error handling
-        """if (
-            "name" not in store_data
-        ):
-            abort(400, message="Bad Request! Ensure 'name', 'price',\
-                'store_id' are in the JSON Payload")"""
-            
-        # Check if the key exists
         for store in stores.values():
             if (
                 store_data["name"] == store ["name"]
                 ):
                 abort(400, message="Store Already Exist")
-        '''
-        if store_data["store_id"] not in stores:
-        # if store_data["store_id"] != stores[store_id]:    
-            abort(400, message="Store Not Found")
-        # Else: Update database with the Processed Logic'''
         store_id = uuid4().hex
         new_store = {**store_data, "id": store_id}
         # new_store = {**request_store, id}
