@@ -2,6 +2,11 @@
 
 from flask import Flask
 from flask_smorest import Api
+from os import getenv
+
+import models
+from db import db
+from db_info import username, host, password, database
 
 from resources.items import blp as ItemBlueprint
 from resources.stores import blp as StoreBlueprint
@@ -11,17 +16,25 @@ from resources.stores import blp as StoreBlueprint
 This is my first API building Project
 using Flask
 """
-app = Flask(__name__)
 
-app.config["PROPAGATE_EXCEPTIONS"] = True
-app.config["API_TITLE"] = "Stores RESTFul API"
-app.config["API_VERSION"] = "v1"
-app.config["OPENAPI_VERSION"] = "3.0.3"
-app.config["OPENAPI_URL_PREFIX"] ="/"
-app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
-app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist"
+db_url = f"mysql+mysqlclient://{username}:{password}@{host}/{database}"
 
-api = Api(app)
+def create_app(db_url=None):
+    app = Flask(__name__)
 
-api.register_blueprint(ItemBlueprint)
-api.register_blueprint(StoreBlueprint)
+    app.config["PROPAGATE_EXCEPTIONS"] = True
+    app.config["API_TITLE"] = "Stores RESTFul API"
+    app.config["API_VERSION"] = "v1"
+    app.config["OPENAPI_VERSION"] = "3.0.3"
+    app.config["OPENAPI_URL_PREFIX"] ="/"
+    app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
+    app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist"
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or  getenv("DATABASE_URI", "sqlite:///data.db")
+                                                   
+
+    api = Api(app)
+
+    api.register_blueprint(ItemBlueprint)
+    api.register_blueprint(StoreBlueprint)
+
+    return app
