@@ -5,7 +5,7 @@ from flask_smorest import abort, Blueprint
 from flask.views import MethodView
 from uuid import uuid4
 
-from db import items
+# from db import items
 from schemas import ItemSchema, ItemUpdateSchema
 
 
