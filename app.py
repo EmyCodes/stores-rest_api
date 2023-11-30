@@ -8,8 +8,8 @@ import models
 from db import db
 from db_info import username, host, password, database
 
-from resources.items import blp as ItemBlueprint
-from resources.stores import blp as StoreBlueprint
+from resources.item import blp as ItemBlueprint
+from resources.store import blp as StoreBlueprint
 
 
 """
