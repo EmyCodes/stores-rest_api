@@ -17,7 +17,7 @@ class Store(MethodView):
         try:
             return stores[store_id]
         except KeyError:
-            abort(404, Message="Store Not Found")
+            abort(404, message="Store Not Found")
 
     def delete(self, store_id):
         store_data = request.get_json()
