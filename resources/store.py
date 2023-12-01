@@ -19,27 +19,16 @@ class Store(MethodView):
     @blp.response(200, StoreSchema)
     def get(self, store_id):
         """This endpoint GET a specific store by store_id"""
-        try:
-            return stores[store_id]
-        except KeyError:
-            abort(404, Message="Store Not Found")
-
+        store = StoreModel.query.get_or_404(store_id)
+        return store
+    
     def delete(self, store_id):
-        store_data = request.get_json()
-        try:
-            del stores[store_id]
-            return {"Message": "Store successfully Deleted"}
-        except KeyError:
-            abort(404, message="Store Not Found!")
+        store = StoreModel.query.get_or_404(store_id)
+        raise NotImplementedError("Deleting is not Implentmented")
     
     def put(self, store_id):
-        store_data = request.get_json()
-        try:
-            stores[store_id] |= store_data
-            return dict(stores[store_id])
-        except KeyError:
-            abort(404, message="Store Not Found!")
-
+        store = StoreModel.query.get_or_404(store_id)
+        raise NotImplementedError("Deleting is not Implentmented")
 
 
 @blp.route("/store")
