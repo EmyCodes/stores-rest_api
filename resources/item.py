@@ -6,7 +6,7 @@ from flask.views import MethodView
 from sqlalchemy.exc import SQLAlchemyError
 # from uuid import uuid4
 
-# from db import items
+from db import db
 from models import ItemModel
 from schemas import ItemSchema, ItemUpdateSchema
 
