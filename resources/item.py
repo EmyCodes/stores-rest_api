@@ -46,7 +46,7 @@ class ItemList(MethodView):
         item = ItemModel(**item_data)
 
         try:
-            db.session.add(new_item)
+            db.session.add(item)
             db.session.commit()
         except SQLAlchemyError:
             abort(500, message="An Error Occurred while Inserting the Item.")
