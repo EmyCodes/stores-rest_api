@@ -18,35 +18,18 @@ class Items(MethodView):
     @blp.response(200, ItemSchema)
     def get(self, item_id):
         """This endpoint GET a specific item by item_id"""
-        try:
-            return items[item_id]
-        except KeyError:
-            abort(404, Message="Item Not Found")
+        item = ItemModel.query.get_or_404(item_id)
+        return item
 
     def delete(self, item_id):
-        item_data = request.get_json()
-        if (
-            "name" not in item_data and
-            "price" not in item_data
-        ):
-            abort(400, message="Bad Request. Ensure you include 'name' and 'price' in JSON Payload")
-        try:
-            del items[item_id]
-            return {"Message": "Item deleted!"}
-        except:
-            abort(404, message="Item Not Found")
+        item = ItemModel.query.get_or_404(item_id)
+        raise NotImplementedError("Deleting an item is not implemented")
     
     @blp.arguments(ItemUpdateSchema)
     @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
-        try:
-            # items[item_id] = item_data
-            items[item_id] |= item_data
-            print({"Message": "Item Updated Successfully!"})
-            return items[item_id]
-        except KeyError:
-            abort(404, message="Item Not Found!")
-
+        item = ItemModel.query.get_or_404(item_id)
+        raise NotImplementedError("Updating an item is not implemented")
 
 
 @blp.route("/item")
@@ -60,7 +43,7 @@ class ItemList(MethodView):
     @blp.response(201, ItemSchema)
     def post(self, item_data):
         """This endpoint CREATE new item"""
-        new_item = ItemModel(**item_data)
+        item = ItemModel(**item_data)
 
         try:
             db.session.add(new_item)
@@ -68,4 +51,4 @@ class ItemList(MethodView):
         except SQLAlchemyError:
             abort(500, message="An Error Occurred while Inserting the Item.")
 
-        return new_item
+        return item
