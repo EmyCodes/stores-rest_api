@@ -57,7 +57,7 @@ class ItemList(MethodView):
         return items.values()
         
     @blp.arguments(ItemSchema)
-    @blp.response(200, ItemSchema)
+    @blp.response(201, ItemSchema)
     def post(self, item_data):
         """This endpoint CREATE new item"""
         new_item = ItemModel(**item_data)

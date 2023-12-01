@@ -3,9 +3,11 @@
 from flask import request
 from flask_smorest import abort, Blueprint
 from flask.views import MethodView
-from uuid import uuid4
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
+# from uuid import uuid4
 
-# from db import stores
+from db import db
+from models import StoreModel
 from schemas import StoreSchema
 
 
@@ -48,16 +50,20 @@ class StoreList(MethodView):
         return stores.values()
     
     @blp.arguments(StoreSchema)
-    @blp.response(200, StoreSchema)
+    @blp.response(201, StoreSchema)
     def post(self, store_data):
         """ This endpoint POST new store with a unique id"""
-        for store in stores.values():
-            if (
-                store_data["name"] == store ["name"]
-                ):
-                abort(400, message="Store Already Exist")
-        store_id = uuid4().hex
-        new_store = {**store_data, "id": store_id}
-        # new_store = {**request_store, id}
-        stores[store_id] = new_store
-        return new_store, 201
+        new_storee = StoreModel(**item_data)
+
+        try:
+            db.session.add(new_item)
+            db.session.commit()
+        except IntegrityError:
+            abort(
+                400,
+                message="A store with name already exists"
+            )
+        except SQLAlchemyError:
+            abort(500, message="An Error Occurred while Inserting the Item.")
+
+        return new_storee
