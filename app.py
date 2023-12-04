@@ -17,7 +17,7 @@ This is my first API building Project
 using Flask
 """
 
-# db_url = f"mysql+mysqlclient://{username}:{password}@{host}/{database}"
+db_url = f"mysql+mysqlclient://{username}:{password}@{host}/{database}"
 
 def create_app(db_url=None):
     app = Flask(__name__)
