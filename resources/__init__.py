@@ -1,4 +1,4 @@
 #!/usr/bin/python3
 
-from resources.items import Items. ItemList
-from resources.stores import Store, StoreList
+from resources.item import Items. ItemList
+from resources.store import Store, StoreList
