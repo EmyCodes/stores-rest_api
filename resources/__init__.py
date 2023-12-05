@@ -1,4 +1,4 @@
 #!/usr/bin/python3
 
-from resources.item import Items. ItemList
-from resources.store import Store, StoreList
+from resources.item import blp as ItemBlueprint
+from resources.store import blp as StoreBlueprint
