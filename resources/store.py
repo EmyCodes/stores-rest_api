@@ -24,8 +24,10 @@ class Store(MethodView):
     
     def delete(self, store_id):
         store = StoreModel.query.get_or_404(store_id)
-        raise NotImplementedError("Deleting is not Implentmented")
-    
+        db.session.delete(store)
+        db.session.commit()
+        return {"message": f"Store with store_id {store_id} successfully deleted"}
+
     def put(self, store_id):
         store = StoreModel.query.get_or_404(store_id)
         raise NotImplementedError("Updating is not Implentmented")
