@@ -34,7 +34,7 @@ class Store(MethodView):
             item.price = item_data["price"]
             item.name = item_data["name"]
         else:
-            item = ItemModel(id=item_id, **item)
+            item = ItemModel(**item)
 
         db.session.add(item)
         db.session.commit()
@@ -47,7 +47,7 @@ class ItemList(MethodView):
     @blp.response(200, ItemSchema(many=True))
     def get(self):
         """This endpoint GET ALL new items"""
-        return items.values()
+        return ItemModel.query.all()
         
     @blp.arguments(ItemSchema)
     @blp.response(201, ItemSchema)
