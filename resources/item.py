@@ -27,7 +27,7 @@ class Store(MethodView):
         try:
             db.session.delete(item)
             db.session.commit()
-            return {"message": f"Store with store_id {item_id} successfully deleted"}
+            return {"message": f"Item with item_id '{item_id}' successfully deleted"}
         except IntegrityError:
             abort(
                 400,
@@ -42,10 +42,16 @@ class Store(MethodView):
             item.price = item_data["price"]
             item.name = item_data["name"]
         else:
-            item = ItemModel(**item)
+            item = ItemModel(id=item_id, **item)
 
-        db.session.add(item)
-        db.session.commit()
+        try:
+            db.session.add(item)
+            db.session.commit()
+        except Exception:
+            abort(
+                400,
+                message="An Error Occurred"
+            )
 
         return item
 

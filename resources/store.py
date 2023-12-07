@@ -27,7 +27,7 @@ class Store(MethodView):
         try:
             db.session.delete(store)
             db.session.commit()
-            return {"message": f"Store with store_id {store_id} successfully deleted"}
+            return {"message": f"Store with store_id '{store_id}' successfully deleted"}
         except IntegrityError:
             abort(
                 400,
