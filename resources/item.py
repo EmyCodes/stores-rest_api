@@ -3,7 +3,7 @@
 from flask import request
 from flask_smorest import abort, Blueprint
 from flask.views import MethodView
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 # from uuid import uuid4
 
 from db import db
@@ -24,9 +24,15 @@ class Store(MethodView):
 
     def delete(self, item_id):
         item = ItemModel.query.get_or_404(item_id)
-        db.session.delete(item)
-        db.session.commit()
-        return {"message": f"Item with item_id {item_id} successfully deleted"}
+        try:
+            db.session.delete(item)
+            db.session.commit()
+            return {"message": f"Store with store_id {item_id} successfully deleted"}
+        except IntegrityError:
+            abort(
+                400,
+                message="Item Not Found"
+            )      
     
     @blp.arguments(ItemUpdateSchema)
     @blp.response(200, ItemSchema)

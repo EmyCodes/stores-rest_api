@@ -24,9 +24,15 @@ class Store(MethodView):
     
     def delete(self, store_id):
         store = StoreModel.query.get_or_404(store_id)
-        db.session.delete(store)
-        db.session.commit()
-        return {"message": f"Store with store_id {store_id} successfully deleted"}
+        try:
+            db.session.delete(store)
+            db.session.commit()
+            return {"message": f"Store with store_id {store_id} successfully deleted"}
+        except IntegrityError:
+            abort(
+                400,
+                message="Store Not Found"
+            )      
 
     def put(self, store_id):
         store = StoreModel.query.get_or_404(store_id)
