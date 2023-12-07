@@ -28,7 +28,7 @@ class Store(MethodView):
     
     def put(self, store_id):
         store = StoreModel.query.get_or_404(store_id)
-        raise NotImplementedError("Deleting is not Implentmented")
+        raise NotImplementedError("Updating is not Implentmented")
 
 
 @blp.route("/store")
