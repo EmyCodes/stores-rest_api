@@ -13,13 +13,14 @@ from schemas import ItemSchema, ItemUpdateSchema
 
 blp = Blueprint("items", __name__, description="Operations on the items")
 
-@blp.route("/items/<string:item_id>")
-class Items(MethodView):
+@blp.route("/item/<string:item_id>")
+class Store(MethodView):
     @blp.response(200, ItemSchema)
     def get(self, item_id):
-        """This endpoint GET a specific item by item_id"""
+        """This endpoint GET a specific store by store_id"""
         item = ItemModel.query.get_or_404(item_id)
         return item
+    
 
     def delete(self, item_id):
         item = ItemModel.query.get_or_404(item_id)
