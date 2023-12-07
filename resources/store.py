@@ -36,7 +36,7 @@ class StoreList(MethodView):
     @blp.response(200, StoreSchema(many=True))
     def get(self):
         """This endpoint GET ALL stores"""
-        return stores.values()
+        return StoreModel.query.all()
     
     @blp.arguments(StoreSchema)
     @blp.response(201, StoreSchema)
