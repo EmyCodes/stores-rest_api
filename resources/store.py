@@ -42,10 +42,10 @@ class StoreList(MethodView):
     @blp.response(201, StoreSchema)
     def post(self, store_data):
         """ This endpoint POST new store with a unique id"""
-        new_storee = StoreModel(**item_data)
+        new_store = StoreModel(**store_data)
 
         try:
-            db.session.add(new_item)
+            db.session.add(new_store)
             db.session.commit()
         except IntegrityError:
             abort(
@@ -55,4 +55,4 @@ class StoreList(MethodView):
         except SQLAlchemyError:
             abort(500, message="An Error Occurred while Inserting the Item.")
 
-        return new_storee
+        return new_store
