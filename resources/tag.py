@@ -52,8 +52,11 @@ class LinkTagsToItems(MethodView):
         item = ItemModel.query.get_or_404(item_id)
         tag = TagModel.query.get_or_404(tag_id)
 
-        try:
+        # To be checked:
+        # Item store_id should match Tag store_id
+        if item.stores_id == tag.stores_id:
             item.tags.append(tag)
+        try:
             db.session.add(item)
             db.session.commit()
         except SQLAlchemyError:
@@ -62,13 +65,14 @@ class LinkTagsToItems(MethodView):
 
         return tag
     
-    @blp.response(200, TagSchema)
+    @blp.response(200, TagAndItemSchema)
     def delete(self, item_id, tag_id):
         item = ItemModel.query.get_or_404(item_id)
         tag = TagModel.query.get_or_404(tag_id)
 
+        item.tags.remove(tag)
+
         try:
-            item.tags.remove(tag)
             db.session.add(item)
             db.session.commit()
         except SQLAlchemyError:
