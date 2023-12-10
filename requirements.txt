@@ -5,3 +5,7 @@ sqlalchemy
 flask-sqlalchemy
 flask-jwt-extended
 passlib
+flask-migrate
+gunicorn
+blocklist
+psycopg2-binary
