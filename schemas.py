@@ -47,6 +47,7 @@ class TagSchema(PlainTagSchema):
 
 
 class TagAndItemSchema(Schema):
+    """Docs: To be Updated """
     message = fields.Str()
     item = fields.Nested(ItemSchema)
     tag = fields.Nested(TagSchema)
