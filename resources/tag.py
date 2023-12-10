@@ -54,7 +54,7 @@ class LinkTagsToItems(MethodView):
 
         # To be checked:
         # Item store_id should match Tag store_id
-        if item.stores_id == tag.stores_id:
+        if item.store_id == tag.store_id:
             item.tags.append(tag)
         try:
             db.session.add(item)
@@ -69,8 +69,8 @@ class LinkTagsToItems(MethodView):
     def delete(self, item_id, tag_id):
         item = ItemModel.query.get_or_404(item_id)
         tag = TagModel.query.get_or_404(tag_id)
-
-        item.tags.remove(tag)
+        if item.stores_id == tag.stores_id:
+            item.tags.remove(tag)
 
         try:
             db.session.add(item)
