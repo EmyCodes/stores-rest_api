@@ -1,3 +1,5 @@
-## stores_and_items_api
+## Store RestFul api
+
+**ALX Webstack Portfolio Project**
 
 *To be Updated soon*
