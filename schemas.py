@@ -52,9 +52,19 @@ class TagAndItemSchema(Schema):
     item = fields.Nested(ItemSchema)
     tag = fields.Nested(TagSchema)
     
+# class PlainUserSchema(Schema):
+#     """Docs: To be updated """
+#     id = fields.Int(dump_only=True)
+#     username = fields.Str(required=True)
+#     password = fields.Str(required=True, load_only=True)
+
+
+# class UserSchema(PlainUserSchema):
+#     id = fields.Int(load_only=True)
+#     users = fields.List(fields.Nested(PlainUserSchema), dump_only=True)
+
 class UserSchema(Schema):
     """Docs: To be updated """
     id = fields.Int(dump_only=True)
     username = fields.Str(required=True)
-    password = fields.Str(required=True, load_only=True)
-     
+    password = fields.Str(required=True)

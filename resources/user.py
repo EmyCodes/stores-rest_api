@@ -36,7 +36,7 @@ class UserRegister(MethodView):
                 "id": user.id,
                 "username": user.username
             }
-        ], 200
+        ], 201
 
 @blp.route("/user/<int:user_id>")
 class User(MethodView):
