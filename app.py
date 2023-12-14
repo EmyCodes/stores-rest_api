@@ -12,6 +12,7 @@ from db_info import username, host, password, database
 from resources.item import blp as ItemBlueprint
 from resources.store import blp as StoreBlueprint
 from resources.tag import blp as TagBlueprint
+from resources.user import blp as UserBlueprint
 
 
 """
@@ -22,6 +23,7 @@ using Flask
 db_url = f"mysql+mysqlclient://{username}:{password}@{host}/{database}"
 
 def create_app(db_url=None):
+    """ ksksksksksk"""
     app = Flask(__name__)
 
     app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -47,5 +49,6 @@ def create_app(db_url=None):
     api.register_blueprint(ItemBlueprint)
     api.register_blueprint(StoreBlueprint)
     api.register_blueprint(TagBlueprint)
+    api.register_blueprint(UserBlueprint)
 
     return app
