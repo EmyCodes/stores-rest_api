@@ -27,10 +27,16 @@ class UserRegister(MethodView):
         db.session.add(user)
         db.session.commit()
         
-        return {
-            "message": "User created Successfully!"
-        }, 201
-    
+        # return {
+        #     "message": "User created Successfully!"
+        # }, 201
+        return [
+            "User Registered Sucessfully",
+            {
+                "id": user.id,
+                "username": user.username
+            }
+        ], 200
 
 @blp.route("/user/<int:user_id>")
 class User(MethodView):
@@ -46,3 +52,11 @@ class User(MethodView):
         return {
             "mesaage": "User deleted"
         }, 200
+
+
+# @blp.route("/user")
+# class UserList(MethodView):
+#     @blp.response(200, UserSchema(many=True))
+#     def get(self):
+#         user = UserModel.query.all()
+#         return user
