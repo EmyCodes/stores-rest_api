@@ -32,7 +32,7 @@ class UserRegister(MethodView):
         }, 201
     
 
-@blp.route("/user/<int:user_id")
+@blp.route("/user/<int:user_id>")
 class User(MethodView):
     @blp.response(200, UserSchema)
     def get(self, user_id):
