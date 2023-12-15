@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
-from flask import request
+# from flask import request
 from flask_smorest import abort, Blueprint
+from flask_jwt_extended import jwt_required
 from flask.views import MethodView
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 # from uuid import uuid4
@@ -15,13 +16,14 @@ blp = Blueprint("items", __name__, description="Operations on the items")
 
 @blp.route("/item/<int:item_id>")
 class Store(MethodView):
+    @jwt_required()
     @blp.response(200, ItemSchema)
     def get(self, item_id):
         """This endpoint GET a specific store by store_id"""
         item = ItemModel.query.get_or_404(item_id)
         return item
     
-
+    @jwt_required()
     def delete(self, item_id):
         item = ItemModel.query.get_or_404(item_id)
         try:
@@ -34,6 +36,7 @@ class Store(MethodView):
                 message="Item Not Found"
             )      
     
+    @jwt_required()
     @blp.arguments(ItemUpdateSchema)
     @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
@@ -58,11 +61,13 @@ class Store(MethodView):
 
 @blp.route("/item")
 class ItemList(MethodView):
+    @jwt_required()
     @blp.response(200, ItemSchema(many=True))
     def get(self):
         """This endpoint GET ALL new items"""
         return ItemModel.query.all()
-        
+
+    @jwt_required()    
     @blp.arguments(ItemSchema)
     @blp.response(201, ItemSchema)
     def post(self, item_data):
