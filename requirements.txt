@@ -9,3 +9,4 @@ flask-migrate
 gunicorn
 blocklist
 psycopg2-binary
+flask-migrate
