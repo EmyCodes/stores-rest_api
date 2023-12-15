@@ -23,7 +23,7 @@ class Store(MethodView):
         item = ItemModel.query.get_or_404(item_id)
         return item
     
-    @jwt_required()
+    @jwt_required(fresh=True) 
     def delete(self, item_id):
         jwt = get_jwt()
         if not jwt.get("is_admin"):
@@ -40,7 +40,7 @@ class Store(MethodView):
                 message="Item Not Found"
             )      
     
-    @jwt_required()
+    @jwt_required(fresh=True) ()
     @blp.arguments(ItemUpdateSchema)
     @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
@@ -71,7 +71,7 @@ class ItemList(MethodView):
         """This endpoint GET ALL new items"""
         return ItemModel.query.all()
 
-    @jwt_required()    
+    @jwt_required(fresh=True)    
     @blp.arguments(ItemSchema)
     @blp.response(201, ItemSchema)
     def post(self, item_data):
