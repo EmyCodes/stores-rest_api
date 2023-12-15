@@ -3,7 +3,7 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from passlib.hash import pbkdf2_sha256
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, get_jwt, jwt_required
 
 from db import db
 from models import UserModel
@@ -63,7 +63,12 @@ class User(MethodView):
         user = UserModel.query.get_or_404(user_id)
         return user
     
+    # @jwt_required()
     def delete(self, user_id):
+        # jwt = get_jwt()
+        # if not jwt.get("is_admin"):
+        #     abort(401, message="Admin privilege reqiuired.")
+
         user = UserModel.query.get_or_404(user_id)
         db.session.delete(user)
         db.session.commit()
