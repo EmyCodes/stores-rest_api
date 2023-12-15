@@ -6,9 +6,10 @@ from flask_jwt_extended import JWTManager
 from os import getenv
 
 import models
+
+from blocklist import BLOCKLIST
 from db import db
 from db_info import username, host, password, database
-
 from resources.item import blp as ItemBlueprint
 from resources.store import blp as StoreBlueprint
 from resources.tag import blp as TagBlueprint
@@ -23,7 +24,7 @@ using Flask
 db_url = f"mysql+mysqlclient://{username}:{password}@{host}/{database}"
 
 def create_app(db_url=None):
-    """ ksksksksksk"""
+    """ Docs: To be updated"""
     app = Flask(__name__)
 
     app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -42,8 +43,25 @@ def create_app(db_url=None):
     app.config["JWT_SECRET_KEY"] = "106687186741913238732192922019664271153"
     jwt = JWTManager(app)
 
+    @jwt.token_in_blocklist_loader
+    def check_if_token_in_blocklist(jwt_header, jwt_payload):
+        return jwt_payload["jt1"] in BLOCKLIST
+
+    @jwt.revoked_token_loader
+    def revoked_token_callback(jwt_header, jwt_payload):
+        return (
+            jsonify(
+                {
+                    "description": "The token has been revoked.",
+                    "error": "token_revoked"
+                }
+            ),
+            401,
+        )
+
     @jwt.additional_claims_loader
     def add_claims_to_jwt(identity):
+        """Verify if Admin"""
         if identity == 1:
             return {"is_admin": True}
         return {"is_admin": False}
@@ -55,16 +73,18 @@ def create_app(db_url=None):
                 {
                     "message":"The token has expired.",
                     "error":"token_expired"
-                }),
-                401,
+                }
+            ),
+            401,
         )
     
     @jwt.invalid_token_loader
     def invalid_token_callback(error):
         return (
             jsonify(
-                {"message": "Signature verification failed",
-                 "error": "invali_token"
+                {
+                    "message": "Signature verification failed",
+                    "error": "invalid_token"
                 }
             ),
             401,
