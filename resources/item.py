@@ -40,7 +40,7 @@ class Store(MethodView):
                 message="Item Not Found"
             )      
     
-    @jwt_required(fresh=True) ()
+    @jwt_required(fresh=True)
     @blp.arguments(ItemUpdateSchema)
     @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
