@@ -2,7 +2,7 @@
 
 ## Overview
 
-    This repository contains a Flask RESTful API for managing stores, items, tags, and user authentication. The API uses Flask-Smorest for creating a RESTful API, Flask-JWT-Extended for user authentication, and SQLAlchemy for interacting with a relational database.
+This repository contains a Flask RESTful API for managing stores, items, tags, and user authentication. The API uses Flask-Smorest for creating a RESTful API, Flask-JWT-Extended for user authentication, and SQLAlchemy for interacting with a relational database.
 
 ## Project Structure
 
@@ -30,9 +30,10 @@
 
 # Dependencies
 
-    Flask
-    Flask-Smorest
-    Flask-JWT-Extended
-    SQLAlchemy
-    Passlib
-    Marshmallow
+- Flask
+- Flask-Smorest
+- Flask-JWT-Extended
+- SQLAlchemy
+- Passlib
+- Marshmallow
+
