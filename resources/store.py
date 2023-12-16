@@ -11,18 +11,31 @@ from models import StoreModel
 from schemas import StoreSchema
 
 
+# Blueprint for the Stores
 blp = Blueprint("stores", __name__, description="Operations on the Stores")
 
 
 @blp.route("/store/<int:store_id>")
 class Store(MethodView):
+    """This is a class for the store endpoints"""
     @blp.response(200, StoreSchema)
     def get(self, store_id):
-        """This endpoint GET a specific store by store_id"""
+        """
+        This endpoint GET a specific store by store_id
+        Args:
+            store_id (int): The id of the store
+            Returns: The store with the given id or 404 if not found
+        """
         store = StoreModel.query.get_or_404(store_id)
         return store
     
     def delete(self, store_id):
+        """
+        This endpoint DELETE a specific store by store_id
+        Args:
+            store_id (int): The id of the store
+            Returns: The store with the given id or 404 if not found
+        """
         store = StoreModel.query.get_or_404(store_id)
         try:
             db.session.delete(store)
@@ -35,21 +48,35 @@ class Store(MethodView):
             )      
 
     def put(self, store_id):
+        """
+        This endpoint UPDATE a specific store by store_id
+        Args:
+            store_id (int): The id of the store
+            Returns: The store with the given id or 404 if not found
+        """
         store = StoreModel.query.get_or_404(store_id)
         raise NotImplementedError("Updating is not Implentmented")
 
 
 @blp.route("/store")
 class StoreList(MethodView):
+    """This is a class for the store endpoints"""
     @blp.response(200, StoreSchema(many=True))
     def get(self):
-        """This endpoint GET ALL stores"""
+        """
+        This endpoint GET all stores
+        Returns: All stores
+        """
         return StoreModel.query.all()
     
     @blp.arguments(StoreSchema)
     @blp.response(201, StoreSchema)
     def post(self, store_data):
-        """ This endpoint POST new store with a unique id"""
+        """
+        This endpoint POST new store with a unique id
+        Args:
+            store_data (dict): The data of the store
+            Returns: The store with the given id or 400 if integrity error or 500 if SQLAlchemyError"""
         store = StoreModel(**store_data)
 
         try:
