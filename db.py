@@ -2,4 +2,5 @@
 
 from flask_sqlalchemy import SQLAlchemy
 
+# Database Initialization
 db = SQLAlchemy()
