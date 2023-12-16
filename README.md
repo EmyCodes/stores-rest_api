@@ -174,7 +174,7 @@ The `UserModel` represents a user in the system. It includes information about t
 
 ## Contributing
 
-This project is not open to Contribution for now.
+This project is not open to Contribution at this moment. The project is solely built in response to **ALX Webstack (Portfolio) Project** for Cohort 11 
 
 ## License
 
