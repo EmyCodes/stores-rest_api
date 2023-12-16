@@ -178,7 +178,7 @@ Feel free to contribute to the development of this project. Create a pull reques
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GNU General Public License](LICENSE).
 
 
 ## Notes
