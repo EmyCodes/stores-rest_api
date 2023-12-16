@@ -6,10 +6,10 @@
 
 # Project Structure
 **resources/**: Contains the main code files for different resources like items, stores, tags, and users.
-        **item_resource.py**: Defines the RESTful API endpoints for managing items.
-        **store_resource.py**: Defines the RESTful API endpoints for managing stores.
-        **tag_resource.py**: Defines the RESTful API endpoints for managing tags.
-        **user_resource.py**: Defines the RESTful API endpoints for user registration, login, and management.
+    **item_resource.py**: Defines the RESTful API endpoints for managing items.
+    **store_resource.py**: Defines the RESTful API endpoints for managing stores.
+    **tag_resource.py**: Defines the RESTful API endpoints for managing tags.
+    **user_resource.py**: Defines the RESTful API endpoints for user registration, login, and management.
 
 **db.py**: Contains the configuration for the SQLAlchemy database.
 
