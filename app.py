@@ -19,13 +19,20 @@ from resources.user import blp as UserBlueprint
 
 """
 This is my first API building Project
-using Flask
+using Flask, Flask-RESTful, Flask-JWT-Extended, Flask-SQLAlchemy
+and Flask-Migrate to create a RESTful API with JWT Authentication and
+SQLite Database. I will be using SQLAlchemy to create a database and
+Flask-Migrate to migrate the database. I will be using Flask-JWT-Extended to
+create a JWT Token for Authentication and Authorization. I will be using Flask-Smorest to create
+a RESTful API with OpenAPI Documentation. I will be using Flask-RESTful to create a RESTful API.
 """
 
 db_url = f"mysql+mysqlclient://{username}:{password}@{host}/{database}"
 
 def create_app(db_url=None):
-    """ Docs: To be updated"""
+    """
+    Create Flask App and register Blueprints and Extensions to it and return it as app object
+    """
     app = Flask(__name__)
 
     app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -46,10 +53,17 @@ def create_app(db_url=None):
 
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blocklist(jwt_header, jwt_payload):
+        """
+        Check if token is in blocklist or not and return error if token is in blocklist.
+        """
         return jwt_payload["jti"] in BLOCKLIST
 
     @jwt.revoked_token_loader
     def revoked_token_callback(jwt_header, jwt_payload):
+        """
+        Check if token is revoked or not and
+        return error if revoked token is used to access any endpoint.
+        """
         return (
             jsonify(
                 {
@@ -62,6 +76,10 @@ def create_app(db_url=None):
     
     @jwt.needs_fresh_token_loader
     def token_not_fresh_callback(jwt_header, jwt_payload):
+        """
+        Check if token is fresh or not and
+        return error if not fresh token is used to access fresh endpoint.
+        """
         return (
             jsonify(
                 {
@@ -74,13 +92,22 @@ def create_app(db_url=None):
 
     @jwt.additional_claims_loader
     def add_claims_to_jwt(identity):
-        """Verify if Admin"""
+        """
+        Add claims to JWT token based on identity of user (admin or not)
+        Args:
+            identity: User identity
+            Returns: Dictionary of claims
+        """
         if identity == 1:
             return {"is_admin": True}
         return {"is_admin": False}
 
     @jwt.expired_token_loader
     def expire_token_callback(jwt_header, jwt_payload):
+        """
+        Check if token is expired or not and
+        return error if expired token is used to access any endpoint.
+        """
         return (
             jsonify(
                 {
@@ -93,6 +120,10 @@ def create_app(db_url=None):
     
     @jwt.invalid_token_loader
     def invalid_token_callback(error):
+        """
+        Check if token is invalid or not and
+        return error if invalid token is used to access any endpoint.
+        """
         return (
             jsonify(
                 {
@@ -105,6 +136,10 @@ def create_app(db_url=None):
     
     @jwt.unauthorized_loader
     def missing_token_callback(error):
+        """
+        Check if token is missing or not and
+        return error if missing token is used to access any endpoint.
+        """
         return (
             jsonify(
                 {
@@ -119,6 +154,7 @@ def create_app(db_url=None):
     # with app.app_context():
     #     db.create_all()
 
+    # Register Blueprints
     api.register_blueprint(ItemBlueprint)
     api.register_blueprint(StoreBlueprint)
     api.register_blueprint(TagBlueprint)
