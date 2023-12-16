@@ -1,8 +1,22 @@
 #!/usr/bin/python3
 
 from db import db
+"""
+db (object): SQLAlchemy object imported from db.py file
+"""
+
 
 class TagModel(db.Model):
+    """
+    Tag Model for creating a tag object
+    Args:
+        __tablename__ (str): The name of the table in the database
+        id (int): The id of the tag
+        name (str): The name of the tag
+        store_id (int): The id of the store
+        store (object): The store object
+        items (list): The list of items
+    """
     __tablename__ = "tags"
     
     id = db.Column(db.Integer, primary_key=True)
