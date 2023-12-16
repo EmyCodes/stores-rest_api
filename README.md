@@ -174,7 +174,7 @@ The `UserModel` represents a user in the system. It includes information about t
 
 ## Contributing
 
-Feel free to contribute to the development of this project. Create a pull request or open an issue for discussions.
+This project is not open to Contribution for now.
 
 ## License
 
