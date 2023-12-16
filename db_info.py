@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-username = "user_name"
+# Database Information
+username = "EmyCodes"
 host = "localhost"
-password = "passwd"
+password = "19022002"
 database = "data.db"
