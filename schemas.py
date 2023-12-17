@@ -81,6 +81,15 @@ class StoreSchema(PlainStoreSchema):
     tags = fields.List(fields.Nested(PlainTagSchema()), dump_only=True)
 
 
+class StoreUpdateSchema(Schema):
+    """
+    Store Update Schema
+    Attributes:
+        name: Store name
+    """
+    name = fields.Str()
+
+
 class TagSchema(PlainTagSchema):
     """
     Tag Schema inherit from PlainTagSchema
