@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from flask import request
+from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint, abort
 from flask.views import MethodView
 from sqlalchemy.exc import SQLAlchemyError
@@ -16,6 +17,7 @@ blp = Blueprint("Tags", __name__, description="Operations on the tags")
 @blp.route("/store/<int:store_id>/tag")
 class TagsInStore(MethodView):
     """This is a class for the tags endpoints"""
+    @jwt_required() # Newly Added
     @blp.response(200, TagSchema(many=True))
     def get(self, store_id):
         """
@@ -28,6 +30,7 @@ class TagsInStore(MethodView):
         
         return store.tags.all()
     
+    @jwt_required() # Newly Added
     @blp.arguments(TagSchema)
     @blp.response(201, TagSchema)
     def post(self, tag_data, store_id):
@@ -62,6 +65,7 @@ class TagsInStore(MethodView):
 @blp.route("/item/<int:item_id>/tag/<string:tag_id>")
 class LinkTagsToItems(MethodView):
     """This is a class for the tags endpoints"""
+    @jwt_required() # Newly Added
     @blp.response(201, TagSchema)
     def post(self, item_id, tag_id):
         """
@@ -86,6 +90,7 @@ class LinkTagsToItems(MethodView):
 
         return tag
     
+    @jwt_required() # Newly Added
     @blp.response(200, TagAndItemSchema)
     def delete(self, item_id, tag_id):
         """
@@ -112,6 +117,7 @@ class LinkTagsToItems(MethodView):
 @blp.route("/tag/<int:tag_id>")
 class Tag(MethodView):
     """This is a class for the tags endpoints"""
+    @jwt_required() # Newly Added
     @blp.response(200, TagSchema)
     def get(self, tag_id):
         """
@@ -123,6 +129,7 @@ class Tag(MethodView):
         tag = TagModel.query.get_or_404(tag_id)
         return tag
 
+    @jwt_required() # Newly Added
     @blp.response(
         202,
         description="Deletes a Tag if no item is tagged with it.",

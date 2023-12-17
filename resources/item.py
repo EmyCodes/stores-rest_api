@@ -31,7 +31,8 @@ class Store(MethodView):
         item = ItemModel.query.get_or_404(item_id)
         return item
     
-    @jwt_required(fresh=True) 
+    # @jwt_required(fresh=True)
+    @jwt_required()
     def delete(self, item_id):
         """
         This endpoint DELETE a specific item by item_id
@@ -56,7 +57,8 @@ class Store(MethodView):
                 message="Item Not Found"
             )      
     
-    @jwt_required(fresh=True)
+    # @jwt_required(fresh=True)
+    @jwt_required()
     @blp.arguments(ItemUpdateSchema)
     @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
@@ -97,7 +99,8 @@ class ItemList(MethodView):
         """
         return ItemModel.query.all()
 
-    @jwt_required(fresh=True)    
+    # @jwt_required(fresh=True)  
+    @jwt_required()  
     @blp.arguments(ItemSchema)
     @blp.response(201, ItemSchema)
     def post(self, item_data):

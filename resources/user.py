@@ -86,7 +86,7 @@ class TokenRefresh(MethodView):
         """
         current_user = get_jwt_identity()
         new_token = create_access_token(identity=current_user, fresh=False)
-        jti = get_jwt(["jti"])
+        jti = get_jwt()["jti"]
         BLOCKLIST.add(jti)
         return {"access_token": new_token}
 
@@ -112,6 +112,7 @@ class UserLogout(MethodView):
 @blp.route("/user/<int:user_id>")
 class User(MethodView):
     """User Class for getting and deleting users by id"""
+    @jwt_required() # Newly Added
     @blp.response(200, UserSchema)
     def get(self, user_id):
         """
@@ -124,6 +125,7 @@ class User(MethodView):
         return user
     
     # @jwt_required()
+    @jwt_required() # Newly Added
     def delete(self, user_id):
         """
         User Endpoint for deleting users by id

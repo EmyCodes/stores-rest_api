@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from flask import request
+from flask_jwt_extended import jwt_required
 from flask_smorest import abort, Blueprint
 from flask.views import MethodView
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
@@ -18,6 +19,7 @@ blp = Blueprint("stores", __name__, description="Operations on the Stores")
 @blp.route("/store/<int:store_id>")
 class Store(MethodView):
     """This is a class for the store endpoints"""
+    @jwt_required() # Newly Added
     @blp.response(200, StoreSchema)
     def get(self, store_id):
         """
@@ -29,6 +31,7 @@ class Store(MethodView):
         store = StoreModel.query.get_or_404(store_id)
         return store
     
+    @jwt_required() # Newly Added
     def delete(self, store_id):
         """
         This endpoint DELETE a specific store by store_id
@@ -47,6 +50,7 @@ class Store(MethodView):
                 message="Store Not Found"
             )      
 
+    @jwt_required() # Newly Added
     def put(self, store_id):
         """
         This endpoint UPDATE a specific store by store_id
@@ -61,6 +65,7 @@ class Store(MethodView):
 @blp.route("/store")
 class StoreList(MethodView):
     """This is a class for the store endpoints"""
+    @jwt_required() # Newly Added
     @blp.response(200, StoreSchema(many=True))
     def get(self):
         """
@@ -69,6 +74,7 @@ class StoreList(MethodView):
         """
         return StoreModel.query.all()
     
+    @jwt_required() # Newly Added
     @blp.arguments(StoreSchema)
     @blp.response(201, StoreSchema)
     def post(self, store_data):
