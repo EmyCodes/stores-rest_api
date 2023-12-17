@@ -9,7 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
 from db import db
 from models import StoreModel
-from schemas import StoreSchema
+from schemas import StoreSchema, StoreUpdateSchema
 
 
 # Blueprint for the Stores
@@ -51,7 +51,9 @@ class Store(MethodView):
             )      
 
     @jwt_required() # Newly Added
-    def put(self, store_id):
+    @blp.arguments(StoreUpdateSchema)
+    @blp.response(200, StoreSchema)
+    def put(self, store_data, store_id):
         """
         This endpoint UPDATE a specific store by store_id
         Args:
@@ -59,7 +61,22 @@ class Store(MethodView):
             Returns: The store with the given id or 404 if not found
         """
         store = StoreModel.query.get_or_404(store_id)
-        raise NotImplementedError("Updating is not Implentmented")
+        if store:
+            store.name = store_data["name"]
+        else:
+            item = StoreModel(id=store_id, **store)
+
+        try:
+            db.session.add(store)
+            db.session.commit()
+        except Exception:
+            abort(
+                400,
+                message="An Error Occurred"
+            )
+
+        return store
+        # raise NotImplementedError("Updating is not Implentmented")
 
 
 @blp.route("/store")
