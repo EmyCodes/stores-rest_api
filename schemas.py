@@ -26,9 +26,10 @@ class PlainItemSchema(Schema):
     name = fields.Str(required=True)
     price = fields.Float(required=True)
 
+
 class PlainStoreSchema(Schema):
     """
-    Plain Store Schema 
+    Plain Store Schema
     Attributes:
         id: Store id
         name: Store name
@@ -114,7 +115,7 @@ class TagAndItemSchema(Schema):
     message = fields.Str()
     item = fields.Nested(ItemSchema)
     tag = fields.Nested(TagSchema)
-    
+
 # class PlainUserSchema(Schema):
 #     """Docs: To be updated """
 #     id = fields.Int(dump_only=True)

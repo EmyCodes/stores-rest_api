@@ -23,15 +23,19 @@ using Flask, Flask-RESTful, Flask-JWT-Extended, Flask-SQLAlchemy
 and Flask-Migrate to create a RESTful API with JWT Authentication and
 SQLite Database. I will be using SQLAlchemy to create a database and
 Flask-Migrate to migrate the database. I will be using Flask-JWT-Extended to
-create a JWT Token for Authentication and Authorization. I will be using Flask-Smorest to create
-a RESTful API with OpenAPI Documentation. I will be using Flask-RESTful to create a RESTful API.
+create a JWT Token for Authentication and Authorization.
+I will be using Flask-Smorest to create
+a RESTful API with OpenAPI Documentation.
+I will be using Flask-RESTful to create a RESTful API.
 """
 
 # db_url = f"mysql+mysqlclient://{username}:{password}@{host}/{database}"
 
+
 def create_app(db_url=None):
     """
-    Create Flask App and register Blueprints and Extensions to it and return it as app object
+    Create Flask App and register Blueprints and
+    Extensions to it and return it as app object
     """
     app = Flask(__name__)
 
@@ -39,12 +43,17 @@ def create_app(db_url=None):
     app.config["API_TITLE"] = "Stores RESTFul API"
     app.config["API_VERSION"] = "v1"
     app.config["OPENAPI_VERSION"] = "3.0.3"
-    app.config["OPENAPI_URL_PREFIX"] ="/"
+    app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
-    app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist"
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or  getenv("DATABASE_URL", f"sqlite:///{database}")
+
+    swagger_url = "https://cdn.jsdelivr.net/npm/swagger-ui-dist"
+    app.config["OPENAPI_SWAGGER_UI_URL"] = swagger_url
+
+    db_uri_config = db_url or getenv("DATABASE_URL", f"sqlite:///{database}")
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_uri_config
+
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db.init_app(app)                                     
+    db.init_app(app)    # db.init_app(app)
     migrate = Migrate(app, db)
     api = Api(app)
 
@@ -54,7 +63,8 @@ def create_app(db_url=None):
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blocklist(jwt_header, jwt_payload):
         """
-        Check if token is in blocklist or not and return error if token is in blocklist.
+        Check if token is in blocklist or not and
+        return error if token is in blocklist.
         """
         return jwt_payload["jti"] in BLOCKLIST
 
@@ -73,7 +83,7 @@ def create_app(db_url=None):
             ),
             401,
         )
-    
+
     @jwt.needs_fresh_token_loader
     def token_not_fresh_callback(jwt_header, jwt_payload):
         """
@@ -111,13 +121,13 @@ def create_app(db_url=None):
         return (
             jsonify(
                 {
-                    "message":"The token has expired.",
-                    "error":"token_expired"
+                    "message": "The token has expired.",
+                    "error": "token_expired"
                 }
             ),
             401,
         )
-    
+
     @jwt.invalid_token_loader
     def invalid_token_callback(error):
         """
@@ -133,7 +143,7 @@ def create_app(db_url=None):
             ),
             401,
         )
-    
+
     @jwt.unauthorized_loader
     def missing_token_callback(error):
         """
