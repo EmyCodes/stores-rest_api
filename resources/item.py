@@ -11,8 +11,7 @@ from db import db
 from models import ItemModel
 from schemas import ItemSchema, ItemUpdateSchema
 
-
- # Blueprint for the items
+# Blueprint for the items
 blp = Blueprint("items", __name__, description="Operations on the items")
 
 
@@ -30,7 +29,7 @@ class Store(MethodView):
         """
         item = ItemModel.query.get_or_404(item_id)
         return item
-    
+
     # @jwt_required(fresh=True)
     @jwt_required()
     def delete(self, item_id):
@@ -50,13 +49,14 @@ class Store(MethodView):
         try:
             db.session.delete(item)
             db.session.commit()
-            return {"message": f"Item with item_id '{item_id}' successfully deleted"}
+            return {"message":
+                    f"Item with item_id '{item_id}' successfully deleted"}
         except IntegrityError:
             abort(
                 400,
                 message="Item Not Found"
-            )      
-    
+            )
+
     # @jwt_required(fresh=True)
     @jwt_required()
     @blp.arguments(ItemUpdateSchema)
@@ -99,8 +99,8 @@ class ItemList(MethodView):
         """
         return ItemModel.query.all()
 
-    # @jwt_required(fresh=True)  
-    @jwt_required()  
+    # @jwt_required(fresh=True)
+    @jwt_required()
     @blp.arguments(ItemSchema)
     @blp.response(201, ItemSchema)
     def post(self, item_data):
@@ -108,7 +108,8 @@ class ItemList(MethodView):
         This endpoint POST a new item
         Args:
             item_data (dict): The data of the item
-            Returns: The item with the given id or 500 if an error occurred while inserting the item
+            Returns: The item with the given id or
+            500 if an error occurred while inserting the item
         """
         item = ItemModel(**item_data)
 
