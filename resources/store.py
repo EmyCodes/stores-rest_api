@@ -19,7 +19,7 @@ blp = Blueprint("stores", __name__, description="Operations on the Stores")
 @blp.route("/store/<int:store_id>")
 class Store(MethodView):
     """This is a class for the store endpoints"""
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.response(200, StoreSchema)
     def get(self, store_id):
         """
@@ -30,8 +30,8 @@ class Store(MethodView):
         """
         store = StoreModel.query.get_or_404(store_id)
         return store
-    
-    @jwt_required() # Newly Added
+
+    @jwt_required()
     def delete(self, store_id):
         """
         This endpoint DELETE a specific store by store_id
@@ -43,7 +43,8 @@ class Store(MethodView):
         try:
             db.session.delete(store)
             db.session.commit()
-            return {"message": f"Store with store_id '{store_id}' successfully deleted"}
+            return {"message": f"Store with store_id "
+                    "'{store_id}' successfully deleted"}
         except IntegrityError:
             abort(
                 400,
