@@ -90,8 +90,8 @@ class StoreList(MethodView):
         Returns: All stores
         """
         return StoreModel.query.all()
-    
-    @jwt_required() # Newly Added
+
+    @jwt_required()
     @blp.arguments(StoreSchema)
     @blp.response(201, StoreSchema)
     def post(self, store_data):
@@ -99,7 +99,8 @@ class StoreList(MethodView):
         This endpoint POST new store with a unique id
         Args:
             store_data (dict): The data of the store
-            Returns: The store with the given id or 400 if integrity error or 500 if SQLAlchemyError"""
+            Returns: The store with the given id or
+              400 if integrity error or 500 if SQLAlchemyError"""
         store = StoreModel(**store_data)
 
         try:
