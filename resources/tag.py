@@ -73,7 +73,8 @@ class LinkTagsToItems(MethodView):
         This endpoint POST a specific tag by store_id
         Args:
             store_id (int): The id of the store
-            Returns: The tag with the given id or 500 if SQLAlchmeyError
+            Returns: The tag with
+             the given id or 500 if SQLAlchmeyError
         """
         item = ItemModel.query.get_or_404(item_id)
         tag = TagModel.query.get_or_404(tag_id)
@@ -96,7 +97,8 @@ class LinkTagsToItems(MethodView):
         This endpoint POST a specific tag by store_id
         Args:
             store_id (int): The id of the store
-            Returns: The tag with the given id or 500 if SQLAlchmeyError
+            Returns: The tag with the given
+             id or 500 if SQLAlchmeyError
         """
         item = ItemModel.query.get_or_404(item_id)
         tag = TagModel.query.get_or_404(tag_id)
