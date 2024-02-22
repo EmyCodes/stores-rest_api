@@ -17,14 +17,15 @@ blp = Blueprint("Tags", __name__, description="Operations on the tags")
 @blp.route("/store/<int:store_id>/tag")
 class TagsInStore(MethodView):
     """This is a class for the tags endpoints"""
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.response(200, TagSchema(many=True))
     def get(self, store_id):
         """
         This endpoint GET all tags in a specific store by store_id
         Args:
             store_id (int): The id of the store
-            Returns: The tags in the store with the given id or 404 if not found
+            Returns: The tags in the store
+              with the given id or 404 if not found
         """
         store = StoreModel.query.get_or_404(store_id)
         
@@ -77,8 +78,6 @@ class LinkTagsToItems(MethodView):
         item = ItemModel.query.get_or_404(item_id)
         tag = TagModel.query.get_or_404(tag_id)
 
-        # To be checked:
-        # Item store_id should match Tag store_id
         if item.store_id == tag.store_id:
             item.tags.append(tag)
         try:
@@ -90,7 +89,7 @@ class LinkTagsToItems(MethodView):
 
         return tag
     
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.response(200, TagAndItemSchema)
     def delete(self, item_id, tag_id):
         """
