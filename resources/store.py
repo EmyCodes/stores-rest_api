@@ -49,9 +49,9 @@ class Store(MethodView):
             abort(
                 400,
                 message="Store Not Found"
-            )      
+            )
 
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.arguments(StoreUpdateSchema)
     @blp.response(200, StoreSchema)
     def put(self, store_data, store_id):
@@ -77,13 +77,12 @@ class Store(MethodView):
             )
 
         return store
-        # raise NotImplementedError("Updating is not Implentmented")
 
 
 @blp.route("/store")
 class StoreList(MethodView):
     """This is a class for the store endpoints"""
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.response(200, StoreSchema(many=True))
     def get(self):
         """
