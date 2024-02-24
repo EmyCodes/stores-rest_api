@@ -29,7 +29,7 @@ class TagsInStore(MethodView):
         """
         store = StoreModel.query.get_or_404(store_id)
         return store.tags.all()
-    
+
     @jwt_required()
     @blp.arguments(TagSchema)
     @blp.response(201, TagSchema)
@@ -39,7 +39,7 @@ class TagsInStore(MethodView):
         Args:
             store_id (int): The id of the store
             Returns: The tag with the given id or 500 if SQLAlchmeyError
-        """    
+        """
         tag = TagModel(**tag_data, store_id=store_id)
 
         try:
@@ -57,7 +57,7 @@ class TagsInStore(MethodView):
 @blp.route("/item/<int:item_id>/tag/<string:tag_id>")
 class LinkTagsToItems(MethodView):
     """This is a class for the tags endpoints"""
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.response(201, TagSchema)
     def post(self, item_id, tag_id):
         """
