@@ -28,10 +28,9 @@ class TagsInStore(MethodView):
               with the given id or 404 if not found
         """
         store = StoreModel.query.get_or_404(store_id)
-        
         return store.tags.all()
     
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.arguments(TagSchema)
     @blp.response(201, TagSchema)
     def post(self, tag_data, store_id):
@@ -40,15 +39,7 @@ class TagsInStore(MethodView):
         Args:
             store_id (int): The id of the store
             Returns: The tag with the given id or 500 if SQLAlchmeyError
-        """
-        # if TagModel.query.filter(
-        #     TagModel.store_id == store_id,
-        #     TagModel.name == tag_data["name"]
-        # ).first():
-        #     abort(400,
-        #           message="A tag with that name already exists in the store"
-        #           )
-            
+        """    
         tag = TagModel(**tag_data, store_id=store_id)
 
         try:
@@ -118,7 +109,7 @@ class LinkTagsToItems(MethodView):
 @blp.route("/tag/<int:tag_id>")
 class Tag(MethodView):
     """This is a class for the tags endpoints"""
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.response(200, TagSchema)
     def get(self, tag_id):
         """
@@ -130,7 +121,7 @@ class Tag(MethodView):
         tag = TagModel.query.get_or_404(tag_id)
         return tag
 
-    @jwt_required() # Newly Added
+    @jwt_required()
     @blp.response(
         202,
         description="Deletes a Tag if no item is tagged with it.",
