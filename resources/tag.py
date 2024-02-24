@@ -77,10 +77,8 @@ class LinkTagsToItems(MethodView):
             db.session.commit()
         except SQLAlchemyError:
             abort(500, message="An Error Occurred while Inserting the Tag")
-        
-
         return tag
-    
+
     @jwt_required()
     @blp.response(200, TagAndItemSchema)
     def delete(self, item_id, tag_id):
@@ -101,10 +99,8 @@ class LinkTagsToItems(MethodView):
             db.session.commit()
         except SQLAlchemyError:
             abort(500, message="An Error Occurred while removing the Tag")
-        
-
         return {"message": "Item removed form tag", "item": item, "tag": tag}
- 
+
 
 @blp.route("/tag/<int:tag_id>")
 class Tag(MethodView):
@@ -130,7 +126,8 @@ class Tag(MethodView):
     @blp.alt_response(404, description="Tag not Found")
     @blp.alt_response(
         400,
-        description="Returned if the tag is assigned to one or more items. In this case, the tag is not deleted."
+        description="Returned if the tag is assigned to one or more"
+        " items. In this case, the tag is not deleted."
     )
     def delete(self, tag_id):
         """
@@ -147,5 +144,6 @@ class Tag(MethodView):
             return {"message": "Tag deleted"}
         abort(
             400,
-            message="Oops! Could not delete trag. Make sure tag is not associated with any items, then Try Again"
+            message="Oops! Could not delete trag. "
+            "Make sure tag is not associated with any items, then Try Again"
         )
