@@ -4,7 +4,10 @@ from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from passlib.hash import pbkdf2_sha256
 from flask_jwt_extended import (
-    create_access_token, get_jwt, jwt_required, create_refresh_token, get_jwt_identity
+    create_access_token,
+    get_jwt, jwt_required,
+    create_refresh_token,
+    get_jwt_identity
 )
 
 from db import db
@@ -19,7 +22,9 @@ blp = Blueprint("Users", "users", description="Operations on users")
 
 @blp.route("/register")
 class UserRegister(MethodView):
-    """User Registration Class for registering users with username and password"""
+    """
+    User Registration Class for registering users with username and password
+    """
     @blp.arguments(UserSchema)
     def post(self, user_data):
         """
@@ -28,9 +33,10 @@ class UserRegister(MethodView):
             user_data (dict): The username and password of the user
             Returns: The user with the given username or 409 if already exists
         """
-        if UserModel.query.filter(UserModel.username == user_data["username"]).first():
+        _filter = UserModel.username == user_data["username"]
+        if UserModel.query.filter(_filter).first():
             abort(409, message="A user with that username already exists.")
-        
+
         user = UserModel(
             username=user_data["username"],
             password=pbkdf2_sha256.hash(user_data["password"])
